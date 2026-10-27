@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#121c22"><title>INTERVENTION — Valsane Studio</title>
+<link rel="stylesheet" href="./style.css"></head><body>
+<main id="scene"></main><div class="vignette"></div>
+<header class="header panel">
+  <div><span class="eyebrow">VALSANE STUDIO · PROTOTYPE 01</span><h1>INTERVENTION<span> / 01</span></h1><p>OPÉRATION SILENCE — COMPLEXE ATLAS</p></div>
+  <div class="stats"><div><span>OTAGES SAUVÉS</span><strong id="saved">0 / 3</strong></div><div><span>MENACES</span><strong id="enemies">?</strong></div><div><span>PHASE</span><strong id="phase">PRÉPARATION</strong></div></div>
+</header>
+<aside class="guide panel">
+  <span class="eyebrow">ORDRES TACTIQUES</span>
+  <p><b>1.</b> Sélectionnez un agent et cliquez au sol pour le placer devant la porte.</p>
+  <p><b>2.</b> Cliquez sur une <b>porte orange</b> ou sur le bouton <b>+</b> d'un agent.</p>
+  <p><b>3.</b> Choisissez « Ouvrir + viser », « Ouvrir + entrer » ou « Suivre », avec un délai éventuel.</p>
+  <p><b>4.</b> Lancez l'exécution : chaque agent suit sa propre liste d'ordres.</p>
+  <div class="guide-controls">GLISSER = CARTE · MAJ + GLISSER = GROUPE · MOLETTE = ZOOM</div>
+  <div id="notification" class="notice">Préparez votre équipe avant de déclencher l'ouverture.</div>
+</aside>
+<aside class="orders panel">
+  <div class="section-head"><span class="eyebrow">PLAN D’INTERVENTION</span><button id="resetOrders" title="Effacer les ordres préparés">EFFACER</button></div>
+  <div id="orderSummary" class="order-summary">Sélectionnez une porte et préparez les ordres.</div>
+  <div class="buttons"><button id="execute" class="primary">▶ EXÉCUTER</button><button id="pause">Ⅱ PAUSE</button><button id="restart">↺</button></div>
+  <div class="status"><i class="green"></i> VERT · OPÉRATEURS <i class="orange"></i> ORANGE · PORTES <i class="red"></i> ROUGE · MENACES</div>
+</aside>
+<section class="agents panel" aria-label="Escouade"><div class="section-head"><span class="eyebrow">ÉQUIPE · 04 OPÉRATEURS</span><span id="selectLabel">ALPHA</span></div>
+  <div id="agentCards" class="agent-cards"></div>
+</section>
+<div id="lasso" class="lasso" hidden></div>
+<div class="modal-layer" id="orderModal" hidden><div class="modal panel">
+  <div class="section-head"><span class="eyebrow">NOUVEL ORDRE</span><button id="closeModal">FERMER ×</button></div>
+  <h2 id="orderTitle">Agent / Ordre</h2>
+  <label>Agent concerné<select id="modalAgent"></select></label>
+  <label>Action<select id="modalAction">
+    <option value="aim">Ouvrir la porte et viser</option><option value="enter">Ouvrir la porte et entrer</option><option value="follow">Suivre une personne</option>
+  </select></label>
+  <div id="doorField"><label>Porte<select id="modalDoor"></select></label></div>
+  <div id="followField" hidden><label>Suivre l'agent<select id="modalFollow"></select></label></div>
+  <label>Délai avant cet ordre <span class="unit">(secondes après l'ordre précédent)</span><input type="number" min="0" max="30" value="0" id="modalDelay"></label>
+  <p class="help">Les agents se placent automatiquement devant la porte sélectionnée avant de l'ouvrir. Plusieurs ordres peuvent être programmés.</p>
+  <button id="saveOrder" class="primary wide">+ AJOUTER À LA SÉQUENCE</button>
+</div></div>
+<div class="overlay" id="endOverlay" hidden><div class="panel end-card"><span class="eyebrow">COMPTE RENDU</span><h2 id="endTitle"></h2><p id="endBody"></p><button class="primary" id="playAgain">RECOMMENCER</button></div></div>
+<script type="module" src="./game.js"></script></body></html>

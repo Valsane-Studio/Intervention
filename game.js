@@ -358,7 +358,7 @@ $('saveOrder').onclick=()=>{
  const p=units[Number($('modalAgent').value)];
  const type=$('modalAction').value,door=$('modalDoor').value,follow=Number($('modalFollow').value);
  if(type==='follow'&&follow===p.id){notice('Un agent ne peut pas se suivre lui-même');return}
- if(executing){notice('Mettez la mission en pause pour préparer un nouvel ordre');return}
+ if(executing){notice('REPASSEZ EN PRÉPARATION POUR PROGRAMMER CET ORDRE');return}
  const delay=Math.max(0,Math.min(30,Number($('modalDelay').value)||0));
  p.orders.push({type,door,follow,delay});
  $('orderModal').hidden=true;renderUI();notice('ORDRE AJOUTÉ À '+names[p.id]);
@@ -367,7 +367,11 @@ $('resetOrders').onclick=()=>{
  if(executing){notice('Interrompez l’exécution avant de modifier les séquences');return}
  units.forEach(u=>{u.orders=[];u.orderIndex=0;u.delayLeft=null;u.active=null;u.following=null});renderUI();notice('PLAN EFFACÉ');
 };
-$('execute').onclick=()=>{executing=true;paused=false;notice('EXÉCUTION SIMULTANÉE DES ORDRES');renderUI()};
+$('execute').onclick=()=>{
+  executing=!executing;paused=false;$('pause').textContent='Ⅱ PAUSE';
+  $('execute').textContent=executing?'■ REVENIR EN PRÉPARATION':'▶ EXÉCUTER';
+  notice(executing?'EXÉCUTION SIMULTANÉE DES ORDRES':'PRÉPARATION · CHOISISSEZ LA PORTE SUIVANTE');renderUI();
+};
 $('pause').onclick=()=>{paused=!paused;$('pause').textContent=paused?'▶ REPRENDRE':'Ⅱ PAUSE'};
 $('restart').onclick=()=>location.reload();$('playAgain').onclick=()=>location.reload();
 $('orderModal').addEventListener('click',e=>{if(e.target===$('orderModal'))$('orderModal').hidden=true});
@@ -432,6 +436,7 @@ window.addEventListener('keydown',e=>{
  if(e.key>='1'&&e.key<='4')selectUnit(Number(e.key)-1,e.shiftKey);
  if(e.code==='Space'){e.preventDefault();paused=!paused;$('pause').textContent=paused?'▶ REPRENDRE':'Ⅱ PAUSE'}
  if(e.key==='Escape')$('orderModal').hidden=true;
+ if(e.key.toLowerCase()==='p')$('execute').click();
 });
 let last=performance.now(),uiLast=0;
 function frame(now){
